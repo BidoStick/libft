@@ -6,13 +6,13 @@
 #    By: jgoncalv <jgoncalv@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/04 14:33:35 by jgoncalv          #+#    #+#              #
-#    Updated: 2016/12/15 10:47:58 by jgoncalv         ###   ########.fr        #
+#    Updated: 2016/12/15 10:58:59 by jgoncalv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all, clean, fclean, re, norme
 
-NAME = libft.a
+NAME = libftprintf.a
 
 CC = gcc
 
@@ -107,7 +107,8 @@ SRC_NAME = libft/ft_putchar.c\
 		printf/ft_printf_wc.c\
 		printf/ft_printf_p.c\
 		printf/ft_printf_dioux.c\
-		libft/ft_putnwstr.c
+		libft/ft_putnwstr.c\
+		gnl/get_next_line.c\
 
 AR = ar rc
 
