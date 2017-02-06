@@ -6,7 +6,7 @@
 /*   By: jgoncalv <jgoncalv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 15:17:30 by jgoncalv          #+#    #+#             */
-/*   Updated: 2016/12/14 15:16:42 by jgoncalv         ###   ########.fr       */
+/*   Updated: 2016/12/16 18:38:23 by jgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <wchar.h>
 # include <stdint.h>
+# include <limits.h>
 
 typedef	struct		s_list
 {
@@ -44,6 +45,10 @@ void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 void				*ft_memalloc(size_t size);
 void				ft_memdel(void **ap);
+void				*ft_memjoin(const void *mem1, const void *mem2,
+					size_t len1, size_t len2);
+void				*ft_memjoinf(void *mem1, void *mem2,
+					size_t len1, size_t len2);
 
 size_t				ft_strlen(const char *str);
 int					ft_wstrlen(wchar_t *wstr);
@@ -77,7 +82,7 @@ char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 char				*ft_strtoupper(char *str);
 
-int					ft_atoi(const char *str);
+intmax_t			ft_atoi(const char *str);
 char				*ft_itoa(intmax_t n);
 
 int					ft_isalpha(int c);
@@ -85,6 +90,7 @@ int					ft_isdigit(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
+int					ft_isint(char *str);
 
 void				ft_putchar(char c);
 void				ft_putstr(char const *str);
@@ -106,6 +112,7 @@ void				*ft_realloc(void *ptr, size_t size);
 char				**ft_tabnew(size_t n);
 int					ft_tablen(char **tab);
 char				**ft_realloc_tab(char **tab, size_t size);
+void				ft_tabdel(char ***tab);
 
 char				*ft_uitoa(uintmax_t n);
 char				*ft_uitoa_base(uintmax_t n, int base, int upper);

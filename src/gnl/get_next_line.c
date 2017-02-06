@@ -12,89 +12,112 @@
 
 #include "get_next_line.h"
 
-static t_lstline	*ft_lstnewline(int fd, char *str, t_lstline **alst)
+static int		fillstr(char **str, char *buf, int ret)
 {
-	t_lstline *newlst;
+	char *tmp;
 
-	if (!(newlst = (t_lstline*)malloc(sizeof(t_lstline))))
-		return (NULL);
-	if (!(newlst->str = (char*)ft_strnew(sizeof(char) * ft_strlen(str))))
-		return (NULL);
-	ft_strcpy(newlst->str, str);
-	newlst->fd = fd;
-	newlst->next = NULL;
-	if (*alst == NULL)
-		*alst = newlst;
+	buf[ret] = '\0';
+	if (*str == NULL)
+		*str = ft_strdup(buf);
 	else
 	{
-		newlst->next = *alst;
-		*alst = newlst;
-	}
-	return (newlst);
-}
-
-static int			ft_lstline_fd(t_lstline *tmp, int fd)
-{
-	if (tmp)
-	{
-		while (tmp->fd != fd && tmp->next != NULL)
-			tmp = tmp->next;
-		if (tmp->fd == fd)
-			return (1);
+		tmp = ft_strdup(*str);
+		ft_strdel(str);
+		*str = (char*)malloc(sizeof(char) * (ft_strlen(tmp) + ret + 1));
+		if (*str == NULL)
+			return (-1);
+		ft_strcpy(*str, tmp);
+		ft_strcat(*str, buf);
+		ft_strdel(&tmp);
 	}
 	return (0);
 }
 
-static	char		*ft_line(t_lstline *tmp, int fd)
+static int		last(char **str, char **line, char *nl)
 {
-	char			*line;
-	char			*str;
-	char			*str2;
-	unsigned int	j;
+	int		i;
+	char	*tmp;
 
-	while (tmp->fd != fd && tmp)
-		tmp = tmp->next;
-	str = tmp->str;
-	j = 0;
-	if (str[0] == '\0')
-		return (NULL);
-	if (!(str2 = ft_strchr(str, '\n')))
-		str2 = str + ft_strlen(str);
-	while (str + j < str2)
-		j++;
-	if (!(line = ft_strsub(str, 0, j)))
-		return (NULL);
-	if (str2[0] == '\0')
-		tmp->str = str + j;
-	else
-		tmp->str = str + (j + 1);
-	return (line);
+	i = 0;
+	while ((*str)[i] != '\n')
+		i = i + 1;
+	*line = (char*)malloc(sizeof(char) * (i + 1));
+	(*line)[0] = '\0';
+	ft_strncpy(*line, *str, i);
+	(*line)[i] = '\0';
+	if (nl[1] == '\0')
+	{
+		ft_strdel(str);
+		return (1);
+	}
+	tmp = ft_strdup(nl + 1);
+	ft_strdel(str);
+	*str = ft_strdup(tmp);
+	ft_strdel(&tmp);
+	return (1);
 }
 
-int					get_next_line(const int fd, char **line)
+static	t_fds	*fdsinit(t_fds *blc, int fd, t_fds *previous)
 {
-	static t_lstline	*alst;
-	char				*buf;
-	char				*str;
-	int					ret;
+	blc->cfd = fd;
+	blc->next = NULL;
+	blc->str = NULL;
+	blc->prev = previous;
+	return (blc);
+}
 
-	if (!(ft_lstline_fd(alst, fd)))
+static	t_fds	*mfds(t_fds *orig, int fd)
+{
+	t_fds *previous;
+
+	previous = NULL;
+	if (orig != NULL)
 	{
-		if (!(buf = (char*)ft_strnew(sizeof(*buf) * BUFF_SIZE)) ||
-			!(str = (char*)ft_strnew(sizeof(*buf) * BUFF_SIZE)))
-			return (-1);
-		while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
+		while ((orig)->prev != NULL)
+			orig = (orig)->prev;
+		while (orig->next != NULL)
 		{
-			if (!(str = ft_realloc(str, ft_strlen(str) + ft_strlen(buf))))
-				return (-1);
-			str = ft_strcat(str, buf);
-			ft_bzero(buf, BUFF_SIZE);
+			if ((orig)->cfd == fd)
+				return (orig);
+			orig = (orig)->next;
 		}
-		if (ret == -1 || !(ft_lstnewline(fd, str, &alst)))
-			return (-1);
-		ft_strdel(&str);
+		if ((orig)->cfd == fd)
+			return (orig);
+		orig->next = (t_fds*)malloc(sizeof(t_fds));
+		previous = orig;
+		orig = orig->next;
 	}
-	if (!(*line = ft_line(alst, fd)))
+	else
+		orig = (t_fds*)malloc(sizeof(t_fds));
+	orig = fdsinit(orig, fd, previous);
+	return (orig);
+}
+
+int				get_next_line(const int fd, char **line)
+{
+	static t_fds	*curr = NULL;
+	int				ret;
+	char			buf[BUFF_SIZE + 1];
+	char			*nl;
+
+	ret = read(fd, buf, BUFF_SIZE);
+	if ((fd < 0) || (ret == -1) || (line == NULL))
+		return (-1);
+	if ((curr = mfds(curr, fd)) == NULL)
+		return (-1);
+	if ((curr->str == NULL) && (ret == 0))
+	{
+		*line = NULL;
 		return (0);
+	}
+	if (fillstr(&(curr->str), buf, ret) == -1)
+		return (-1);
+	if (((nl = ft_strchr(curr->str, '\n')) == NULL) && (ret == BUFF_SIZE))
+		return (get_next_line(fd, line));
+	if (nl != NULL)
+		return (last(&(curr->str), line, nl));
+	*line = ft_strdup(curr->str);
+	ft_strdel(&curr->str);
+	curr->str = NULL;
 	return (1);
 }

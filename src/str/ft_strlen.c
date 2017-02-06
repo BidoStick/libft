@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgoncalv <jgoncalv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/14 17:22:59 by jgoncalv          #+#    #+#             */
-/*   Updated: 2016/12/15 11:00:29 by jgoncalv         ###   ########.fr       */
+/*   Created: 2016/11/04 15:24:19 by jgoncalv          #+#    #+#             */
+/*   Updated: 2016/12/29 16:16:54 by jgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "libft.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-
-# define BUFF_SIZE 1024
-
-typedef	struct		s_fds
+size_t		ft_strlen(const char *str)
 {
-	char			*str;
-	int				cfd;
-	struct s_fds	*next;
-	struct s_fds	*prev;
-}					t_fds;
+	size_t i;
 
-int					get_next_line(const int fd, char **line);
-
-#endif
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}

@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgoncalv <jgoncalv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/14 17:22:59 by jgoncalv          #+#    #+#             */
-/*   Updated: 2016/12/15 11:00:29 by jgoncalv         ###   ########.fr       */
+/*   Created: 2016/11/04 15:39:03 by jgoncalv          #+#    #+#             */
+/*   Updated: 2016/12/16 18:38:03 by jgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "libft.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-
-# define BUFF_SIZE 1024
-
-typedef	struct		s_fds
+intmax_t	ft_atoi(const char *str)
 {
-	char			*str;
-	int				cfd;
-	struct s_fds	*next;
-	struct s_fds	*prev;
-}					t_fds;
+	int			i;
+	intmax_t	res;
+	int			sign;
 
-int					get_next_line(const int fd, char **line);
-
-#endif
+	i = 0;
+	res = 0;
+	sign = 1;
+	while (str[i] <= ' ' && str[i] >= 0)
+		i++;
+	if (str[i] == '-')
+	{
+		sign *= -1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+	while (ft_isdigit(str[i]))
+	{
+		res = (res * 10) + (str[i] - '0');
+		i++;
+	}
+	return (res * sign);
+}
