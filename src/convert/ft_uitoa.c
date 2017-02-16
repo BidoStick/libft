@@ -29,10 +29,8 @@ char		*ft_uitoa(uintmax_t n)
 {
 	char	*str;
 	int		len;
-	int		i;
 
 	len = ft_ilen(n);
-	i = 0;
 	if (n == 0)
 		len++;
 	if (!(str = ft_strnew(sizeof(char) * len)))

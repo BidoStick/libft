@@ -51,11 +51,9 @@ static	int		ft_printf_resolve(char **format, va_list arg)
 
 static	int		ft_read_format(char **format, va_list arg)
 {
-	int		i;
 	int		len;
 	char	*str;
 
-	i = 0;
 	len = 0;
 	while (**format)
 	{

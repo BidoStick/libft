@@ -36,11 +36,6 @@ static int	ft_add_width(int len, t_flag *flag)
 
 static int	ft_display(wchar_t *wstr, int len, t_flag *flag)
 {
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
 	if (flag->negative == 0)
 	{
 		if (flag->width_min > 0 || flag->space == 1)
