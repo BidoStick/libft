@@ -1,24 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tabdel.c                                        :+:      :+:    :+:   */
+/*   ft_res_zero.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgoncalv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/05 23:42:17 by jgoncalv          #+#    #+#             */
-/*   Updated: 2017/02/05 23:42:19 by jgoncalv         ###   ########.fr       */
+/*   Created: 2017/02/16 16:48:43 by jgoncalv          #+#    #+#             */
+/*   Updated: 2017/02/16 16:49:40 by jgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_tabdel(void **tab, size_t size)
+int	ft_res_zero(int	res)
 {
-	size_t	i;
-
-	i = 0;
-	while (i++ < size)
-		ft_memdel(&tab[i]);
-	free(tab);
-	tab = NULL;
+	return ((res == 0 ? 1 : res));
 }

@@ -88,11 +88,13 @@ SRC_NAME = put/ft_putchar.c\
 		lst/ft_lstiter.c\
 		lst/ft_lstmap.c\
 		lst/ft_lstadd_end.c\
+		lst/ft_lstdel_link.c\
 		str/ft_realloc.c\
 		tab/ft_tabnew.c\
 		tab/ft_tablen.c\
 		tab/ft_realloc_tab.c\
 		tab/ft_tabdel.c\
+		tab/ft_atoi_tab.c\
 		convert/ft_uitoa.c\
 		convert/ft_uitoa_base.c\
 		printf/ft_printf.c\
@@ -113,6 +115,7 @@ SRC_NAME = put/ft_putchar.c\
 		wchar/ft_putwstr.c\
 		wchar/ft_putnwstr.c\
 		gnl/get_next_line.c\
+		math/ft_res_zero.c
 
 AR = ar rc
 

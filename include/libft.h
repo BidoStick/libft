@@ -20,6 +20,8 @@
 # include <wchar.h>
 # include <stdint.h>
 # include <limits.h>
+# include "get_next_line.h"
+# include "ft_printf.h"
 
 typedef	struct		s_list
 {
@@ -35,6 +37,8 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstadd_end(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+void				ft_lstdel_link(t_list **alst, t_list *link,
+					void (*del)(void *, size_t));
 
 void				*ft_memset(void *s, int c, size_t n);
 void				ft_bzero(void *s, size_t n);
@@ -112,9 +116,15 @@ void				*ft_realloc(void *ptr, size_t size);
 char				**ft_tabnew(size_t n);
 int					ft_tablen(char **tab);
 char				**ft_realloc_tab(char **tab, size_t size);
-void				ft_tabdel(char ***tab);
+void				ft_tabdel(void	**tab, size_t size);
+int					*ft_atoi_tab(char **tab);
 
 char				*ft_uitoa(uintmax_t n);
 char				*ft_uitoa_base(uintmax_t n, int base, int upper);
+
+/*
+** MATH
+*/
+int					ft_res_zero(int	res);
 
 #endif

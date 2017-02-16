@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tabdel.c                                        :+:      :+:    :+:   */
+/*   ft_atoi_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgoncalv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/05 23:42:17 by jgoncalv          #+#    #+#             */
-/*   Updated: 2017/02/05 23:42:19 by jgoncalv         ###   ########.fr       */
+/*   Created: 2017/02/08 15:16:20 by jgoncalv          #+#    #+#             */
+/*   Updated: 2017/02/08 15:21:43 by jgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_tabdel(void **tab, size_t size)
+int	*ft_atoi_tab(char **tab)
 {
-	size_t	i;
+	int	*res;
+	int	len;
 
-	i = 0;
-	while (i++ < size)
-		ft_memdel(&tab[i]);
-	free(tab);
-	tab = NULL;
+	len = ft_tablen(tab);
+	res = (int*)malloc(sizeof(int) * len);
+	len--;
+	while (len >= 0)
+	{
+		res[len] = ft_atoi(tab[len]);
+		len--;
+	}
+	return (res);
 }

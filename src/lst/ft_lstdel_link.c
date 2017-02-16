@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tabdel.c                                        :+:      :+:    :+:   */
+/*   ft_lstdel_link.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgoncalv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/05 23:42:17 by jgoncalv          #+#    #+#             */
-/*   Updated: 2017/02/05 23:42:19 by jgoncalv         ###   ########.fr       */
+/*   Created: 2017/02/13 22:08:31 by jgoncalv          #+#    #+#             */
+/*   Updated: 2017/02/13 22:08:32 by jgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_tabdel(void **tab, size_t size)
+void	ft_lstdel_link(t_list **alst, t_list *link, void (*del)(void *, size_t))
 {
-	size_t	i;
+	t_list	*tmp;
 
-	i = 0;
-	while (i++ < size)
-		ft_memdel(&tab[i]);
-	free(tab);
-	tab = NULL;
+	if (*alst && link)
+	{
+		if (*alst == link)
+		{
+			if ((*alst)->next)
+				*alst = (*alst)->next;
+			else
+				*alst = NULL;
+		}
+		else
+		{
+			tmp = *alst;
+			while (tmp && tmp->next != link)
+				tmp = tmp->next;
+			tmp->next = link->next;
+		}
+		del(link->content, link->content_size);
+		free(link);
+		link = NULL;
+	}
 }
