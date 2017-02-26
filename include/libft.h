@@ -116,7 +116,7 @@ void				*ft_realloc(void *ptr, size_t size);
 char				**ft_tabnew(size_t n);
 int					ft_tablen(char **tab);
 char				**ft_realloc_tab(char **tab, size_t size);
-void				ft_tabdel(void	**tab, size_t size);
+void				ft_tabdel(char	**tab, size_t size);
 int					*ft_atoi_tab(char **tab);
 
 char				*ft_uitoa(uintmax_t n);

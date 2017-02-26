@@ -18,14 +18,8 @@ char	**ft_tabnew(size_t n)
 	size_t		i;
 
 	i = 0;
-	if (!(tab = (char**)malloc(sizeof(char**) * (n + 1))))
+	if (!(tab = (char**)ft_memalloc(sizeof(char**) * (n + 1))))
 		return (NULL);
-	while (i < n)
-	{
-		if (!(tab[i] = (char*)ft_memalloc(sizeof(char*) * 1)))
-			return (NULL);
-		i++;
-	}
-	tab[i] = NULL;
+	tab[n] = NULL;
 	return (tab);
 }

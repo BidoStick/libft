@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ft_tabdel(void **tab, size_t size)
+void	ft_tabdel(char **tab, size_t size)
 {
 	size_t	i;
 
