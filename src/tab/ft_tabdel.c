@@ -18,7 +18,10 @@ void	ft_tabdel(char **tab, size_t size)
 
 	i = 0;
 	while (i++ < size)
-		ft_memdel(&tab[i]);
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+	}
 	free(tab);
 	tab = NULL;
 }
